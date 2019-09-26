@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SimpleImageDownloader</string>
+    <string name="url_placeholder">http://…</string>
+    <string name="loaded_image">Loaded image</string>
+    <string name="url_label">Url:</string>
+    <string name="load_random">Load random</string>
+    <string name="load_from_url">Load from URL</string>
+</resources>
