@@ -1,11 +1,13 @@
 package com.example.simpleimagedownloader.ui.contract
 
+import android.graphics.Bitmap
+
 interface MainView {
 
     /**
      * Отобразить изображение на View.
      */
-    fun showImage()
+    fun showImage(image: Bitmap)
 
     /**
      * Отобразить сообщение об ошибке.
