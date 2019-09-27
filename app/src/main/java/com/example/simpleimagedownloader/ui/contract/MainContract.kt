@@ -23,14 +23,27 @@ interface MainPresenter {
 
     /**
      * Событие генерируемое View при нажатии на кнопку загрузки рандомного изображения.
+     *
+     * @param needSimulateNetworkDelay имитировать "долгую" загрузку
      */
-    fun onRandomButtonClicked()
+    fun onRandomButtonClicked(needSimulateNetworkDelay: Boolean)
 
     /**
      * Событие генерируемое View при нажатии на кнопку загрузки изображения по ссылке
      * введенной пользователем.
      *
      * @param url ссылка введенная пользователем.
+     * @param needSimulateNetworkDelay имитировать "долгую" загрузку
      */
-    fun onLoadFromUrlButtonClicked(url: String)
+    fun onLoadFromUrlButtonClicked(url: String, needSimulateNetworkDelay: Boolean)
+
+    /**
+     * Привязать View к Presenter'у
+     */
+    fun attachView(view: MainView)
+
+    /**
+     * Отвязать View от Presenter'а
+     */
+    fun detachView()
 }
