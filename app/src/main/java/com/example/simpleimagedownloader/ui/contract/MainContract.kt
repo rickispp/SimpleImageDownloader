@@ -2,48 +2,64 @@ package com.example.simpleimagedownloader.ui.contract
 
 import android.graphics.Bitmap
 
-interface MainView {
+/**
+ * Контракт взаимодействия View и Presenter'а на основном экране
+ */
+interface MainContract {
 
-    /**
-     * Отобразить изображение на View.
-     */
-    fun showImage(image: Bitmap)
+    interface MainView {
 
-    /**
-     * Отобразить сообщение об ошибке.
-     * Вызывается при любых ошибках, о которых должен быть уведомлен пользователь.
-     * Например, ошибка загрузки изображения, некорректно введенный URL и т.д.
-     *
-     * @param message Сообщения для отображения на View.
-     */
-    fun showError(message: String)
-}
+        /**
+         * Отобразить изображение на View.
+         */
+        fun showImage(image: Bitmap)
 
-interface MainPresenter {
+        /**
+         * Отобразить сообщение об ошибке.
+         * Вызывается при любых ошибках, о которых должен быть уведомлен пользователь.
+         * Например, ошибка загрузки изображения, некорректно введенный URL и т.д.
+         *
+         * @param message Сообщения для отображения на View.
+         */
+        fun showError(message: String)
 
-    /**
-     * Событие генерируемое View при нажатии на кнопку загрузки рандомного изображения.
-     *
-     * @param needSimulateNetworkDelay имитировать "долгую" загрузку
-     */
-    fun onRandomButtonClicked(needSimulateNetworkDelay: Boolean)
+        /**
+         * Показать форму ожидания
+         */
+        fun showWaitForm()
 
-    /**
-     * Событие генерируемое View при нажатии на кнопку загрузки изображения по ссылке
-     * введенной пользователем.
-     *
-     * @param url ссылка введенная пользователем.
-     * @param needSimulateNetworkDelay имитировать "долгую" загрузку
-     */
-    fun onLoadFromUrlButtonClicked(url: String, needSimulateNetworkDelay: Boolean)
+        /**
+         * Скрыть форму ожидания
+         */
+        fun hideWaitForm()
+    }
 
-    /**
-     * Привязать View к Presenter'у
-     */
-    fun attachView(view: MainView)
+    interface MainPresenter {
 
-    /**
-     * Отвязать View от Presenter'а
-     */
-    fun detachView()
+        /**
+         * Событие генерируемое View при нажатии на кнопку загрузки рандомного изображения.
+         *
+         * @param needSimulateNetworkDelay имитировать "долгую" загрузку
+         */
+        fun onRandomButtonClicked(needSimulateNetworkDelay: Boolean)
+
+        /**
+         * Событие генерируемое View при нажатии на кнопку загрузки изображения по ссылке
+         * введенной пользователем.
+         *
+         * @param url ссылка введенная пользователем.
+         * @param needSimulateNetworkDelay имитировать "долгую" загрузку
+         */
+        fun onLoadFromUrlButtonClicked(url: String, needSimulateNetworkDelay: Boolean)
+
+        /**
+         * Привязать View к Presenter'у
+         */
+        fun attachView(view: MainView)
+
+        /**
+         * Отвязать View от Presenter'а
+         */
+        fun detachView()
+    }
 }

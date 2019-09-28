@@ -1,30 +1,23 @@
 package com.example.simpleimagedownloader.ui.presenter
 
 import android.graphics.Bitmap
-import android.os.AsyncTask
-import com.example.simpleimagedownloader.components.impl.ImageRepositoryImpl
-import com.example.simpleimagedownloader.ui.contract.MainPresenter
-import com.example.simpleimagedownloader.ui.contract.MainView
+import com.example.simpleimagedownloader.ui.contract.MainContract
+import com.example.simpleimagedownloader.ui.interactor.LoadImageInteractor
+import com.example.simpleimagedownloader.ui.interactor.LoadImageInteractorImpl
 
-class MainActivityPresenter: MainPresenter {
+class MainActivityPresenter: MainContract.MainPresenter {
 
     /**
      * Текущий экземпляр View, с которым работает этот Presenter
      */
-    private var view: MainView? = null
+    private var view: MainContract.MainView? = null
 
     /**
-     * Репозиторий изображений.
-     * Загружает синхронно, все обращения к нему должны быть не в UI-треде.
+     * Интерактор обрабатывающий различные кейсы загрузки изображений
      */
-    private val imageRepository = ImageRepositoryImpl()
+    private val loadImageInteractor = LoadImageInteractorImpl()
 
-    /**
-     * Ссылка для получения случайного изображения с сервиса picsum.photos
-     */
-    private val randomImageLink = "https://picsum.photos/200"
-
-    override fun attachView(view: MainView) {
+    override fun attachView(view: MainContract.MainView) {
         this.view = view
     }
 
@@ -33,29 +26,26 @@ class MainActivityPresenter: MainPresenter {
     }
 
     override fun onRandomButtonClicked(needSimulateNetworkDelay: Boolean) {
-        showImageByUrl(randomImageLink)
+        loadImageInteractor.loadRandomImage(needSimulateNetworkDelay, LoadImageListener())
     }
 
     override fun onLoadFromUrlButtonClicked(url: String, needSimulateNetworkDelay: Boolean) {
-        showImageByUrl(url)
+        loadImageInteractor.loadImageByUrl(url, needSimulateNetworkDelay, LoadImageListener())
     }
 
-    private fun showImageByUrl(url: String) {
-        try {
-            AsyncDownloadImageTask().execute(url)
-        } catch (ex: Exception) {
-            view?.showError(ex.message!!)
-        }
-    }
-
-    inner class AsyncDownloadImageTask: AsyncTask<String, Void, Bitmap>() {
-
-        override fun doInBackground(vararg urls: String): Bitmap {
-            return imageRepository.getImageFromUrl(urls[0])
+    inner class LoadImageListener: LoadImageInteractor.LoadImageInteractorListener {
+        override fun onLoadStart() {
+            view?.showWaitForm()
         }
 
-        override fun onPostExecute(result: Bitmap) {
-            view?.showImage(result)
+        override fun onLoadFinish(image: Bitmap) {
+            view?.hideWaitForm()
+            view?.showImage(image)
+        }
+
+        override fun onError(ex: Exception) {
+            view?.hideWaitForm()
+            view?.showError(ex.localizedMessage!!)
         }
     }
 }

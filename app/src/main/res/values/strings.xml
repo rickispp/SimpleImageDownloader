@@ -6,4 +6,5 @@
     <string name="load_random">Load random</string>
     <string name="load_from_url">Load from URL</string>
     <string name="simulate_network_delay">Simulate network delay</string>
+    <string name="please_wait">Please, wait…</string>
 </resources>

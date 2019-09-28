@@ -5,7 +5,7 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import com.example.simpleimagedownloader.components.ImageRepository
 import com.example.simpleimagedownloader.exception.DownloadImageException
-import java.net.ConnectException
+import java.io.IOException
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -22,12 +22,12 @@ class ImageRepositoryImpl : ImageRepository {
         } catch (ex: MalformedURLException) {
             Log.e(TAG, "Malformed url", ex)
             throw DownloadImageException("Incorrect image url")
-        } catch (ex: ConnectException) {
+        } catch (ex: IOException) {
             Log.e(TAG, "Connection error", ex)
             throw DownloadImageException("Connection refused")
         } catch (ex: Exception) {
-            Log.e(TAG, "Error img downloading", ex)
-            throw DownloadImageException("Unexpected error")
+            Log.e(TAG, "Error loading image", ex)
+            throw DownloadImageException("Error loading image. Something went wrong.")
         }
     }
 }
