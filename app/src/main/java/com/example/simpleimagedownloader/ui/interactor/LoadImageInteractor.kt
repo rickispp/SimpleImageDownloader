@@ -18,7 +18,7 @@ interface LoadImageInteractor {
     fun loadRandomImage(emulateDelay: Boolean, listener: LoadImageInteractorListener)
 
     /**
-     * Интейрфейс слушателя событий интерактора
+     * Интерфейс слушателя событий интерактора
      */
     interface LoadImageInteractorListener {
 
@@ -29,7 +29,7 @@ interface LoadImageInteractor {
 
         /**
          * Вызывается после загрузки изображения, если не возникло ошибок
-         * Вызов этого метода взаимо исключает вызов метода onError
+         * Вызов этого метода взаимоисключает вызов метода onError
          *
          * @param image загруженное изображение
          */
